@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
-import { CheckoutModule } from './checkout/checkout.module';
 import { ConfigModule } from '@nestjs/config';
+import { AxiosModule } from './axios/axios.module';
+import { CheckoutModule } from './checkout/checkout.module';
 
 @Module({
-  imports: [CheckoutModule, ConfigModule.forRoot({
+  imports: [CheckoutModule, AxiosModule, ConfigModule.forRoot({
     isGlobal: true
   })],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }
