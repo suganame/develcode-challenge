@@ -1,4 +1,4 @@
-package com.suganame.payment_gateway.seeders;
+package com.suganame.payment_gateway.seeds;
 
 import java.math.BigDecimal;
 
@@ -9,7 +9,10 @@ import org.springframework.stereotype.Component;
 import com.suganame.payment_gateway.modules.payment.entities.ProductEntity;
 import com.suganame.payment_gateway.modules.payment.repositories.ProductRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class ProductSeeder implements CommandLineRunner {
 
     @Autowired
@@ -17,15 +20,24 @@ public class ProductSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        log.info("Executing seed...");
+        createSeedData();
+        log.info("Seed [Products] was executed succesfully.");
+    }
 
+    public void createSeedData() {
         ProductEntity product1 = new ProductEntity();
         product1.setId(1L);
         product1.setDescription("Cafe tres coracoes");
         product1.setQuantity(new BigDecimal(100));
 
-        productRepository.save(product1);
+        ProductEntity product2 = new ProductEntity();
+        product2.setId(2L);
+        product2.setDescription("Coca cola 2L");
+        product2.setQuantity(new BigDecimal(0));
 
-        System.out.println("Seeder [Products] was executed succesfully.");
+        productRepository.save(product1);
+        productRepository.save(product2);
     }
 
 }
