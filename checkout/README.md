@@ -1,42 +1,44 @@
-# Desafio DevelCode
-## Jornada de desenvolvimento:
+![badge-nodejs](https://img.shields.io/badge/Node-v23.6.1-green)
+![badge-nestjs](https://img.shields.io/badge/Nest-v11.0.1-darkred)
 
-Desafio proposto pela empresa Develcode, no qual consiste no seguinte case:
+# Microsserviço Checkout
+Este microsserviço tem como finalidade enviar o pedido para o microsserviço Payment Gateway. 
 
-### Criação de pedido de compra:
-Criar dois microsserviços, checkout e payment_gateway, onde um pedido realizado deve ser cancelado automaticamente caso o pagamento falhe.
-O microserviço em Node deve ser desenvolvido utilizando TypeScript, preferencialmente com o framework NestJS.
-O microserviço em Java deve ser implementado na versão Java 17+, utilizando o framework Spring Boot na versão 3.3.4+.
-Ambos microserviços devem garantir:
-- Persistência de todas as interações.
-Definir e implementar schemas para o banco de dados, garantindo normalização se relacional ou estrutura coerente se NoSQL.
-- Implementar controle de exceções.
-- Utilização de patterns apropriados.
-- Comunicação assíncrona.
-- Mecanismos de retry em caso de falhas transitórias durante a comunicação assíncrona.
-- Aplicação dos princípios do SOLID para garantia de um código modular e escalável.
-- Pelo menos 60% de cobertura com testes unitários.
-- Documentação básica, incluindo endpoints, exemplos de requisições/respostas e configuração do ambiente para execução.
-- Logging adequado para rastreio de operações e erros.
+## Pré-requisitos
+- Node v23.6.1
 
-<br></br>
+## 🚀 Passo a Passo: Execução do projeto
+Partido da premissa que já exista o Node instalado, podemos iniciar o passo a passo para executar o projeto.
 
-## Microserviço Checkout
+Abrir um terminal no caminho do projeto e executar o seguinte comando para que as dependencias sejam baixadas:
 
-Foi construído em Node+TS juntamente com o framework NestJS, com mecanismos assíncronos, retry para falhas, aplicação de testes unitários, controle de exceções, BDD, princípios SOLID e sistema de logging.
-Bibliotecas e ferramentas utilizadas:
-- Axios para cuidar da comunicação entre os microsserviços.
-- Axios-Retry para realizar o mecanismo de retry, quando houver falhas.
-- Para testes unitários e relatório de coverage: [Jest](https://jestjs.io).
-- Swagger para documentação dos endpoints criados
+```
+npm install
+```
 
-<br></br>
+Dentro do projeto, também teremos que configurar as variáveis de ambiente para a chamada do gateway.
 
-## Payment Gateway
+Portanto, crie um arquivo .env (caso não exista), na raiz do projeto e mapeie a URL do microsserviço do Gateway. Siga o exemplo do arquivo .env.sample.
 
-Foi construído em Java juntamente com o framework Spring boot no formato BDD, ACID para transações, princípios SOLID, banco de dados in memory, sistema de seed e sistema de logging.
-Bibliotecas e ferramentas utilizadas:
-- H2-Database para banco de dados "in memory"
-- Lombok - para facilitar o desenvolvimento e criação de logging.
-- JUnit para testes unitários
-- Swagger para documentação dos endpoints criados
+Com as pré configurações feitas, é hora de rodar o projeto. Para isso basta executar o comando:
+
+```
+npm run start
+```
+
+Este comando efetuará o build do projeto e o executará.
+
+## Testes unitários: Como executar?
+Atualmente o projeto já conta com testes unitários desenvolvidos e com cobertura superior a 90%. Para verificar, basta executar o comando:
+
+Para executar os testes sem gerar o arquivo de cobertura:
+```
+npm run test
+```
+
+Para executar os testes com o arquivo de cobertura:
+```
+npm run test:cov
+```
+
+Com isso, será executado todos os testes unitários criados e também criará os arquivos de cobertura caso tenha rodado o segundo comando, que podem ser acessados no diretório do projeto, na pasta coverage.
