@@ -1,5 +1,12 @@
 package com.suganame.payment_gateway.modules.payment.controllers;
 
+import com.suganame.payment_gateway.exceptions.ProductNotFoundException;
+import com.suganame.payment_gateway.exceptions.ProductOutOfStockException;
+import com.suganame.payment_gateway.modules.order.dtos.OrderDTO;
+import com.suganame.payment_gateway.modules.payment.dtos.ApiResponseDTO;
+import com.suganame.payment_gateway.modules.payment.dtos.PaymentRequestDTO;
+import com.suganame.payment_gateway.modules.payment.useCases.PaymentUseCase;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,29 +15,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.suganame.payment_gateway.exceptions.ProductNotFoundException;
-import com.suganame.payment_gateway.exceptions.ProductOutOfStockException;
-import com.suganame.payment_gateway.modules.payment.dtos.ApiResponseDTO;
-import com.suganame.payment_gateway.modules.payment.dtos.PaymentRequestDTO;
-import com.suganame.payment_gateway.modules.payment.useCases.PaymentUseCase;
-
-import lombok.extern.slf4j.Slf4j;
-
 @RestController
 @RequestMapping("/checkout")
 @Slf4j
 public class PaymentGatewayController {
 
-    private ApiResponseDTO<String> apiResponseDTO;
-
     @Autowired
     private PaymentUseCase paymentUseCase;
 
     @PostMapping("/execute")
-    public ResponseEntity<ApiResponseDTO<String>> execute(@RequestBody PaymentRequestDTO paymentRequestDTO) throws ProductNotFoundException, ProductOutOfStockException, RuntimeException {
+    public ResponseEntity<ApiResponseDTO<String>> execute(@RequestBody OrderDTO orderDTO) throws ProductNotFoundException, ProductOutOfStockException, RuntimeException {
+        ApiResponseDTO<String> apiResponseDTO;
         try {
             log.info("Route /checkout/execute was called.");
-            paymentUseCase.execute(paymentRequestDTO);
+            paymentUseCase.execute(orderDTO);
             apiResponseDTO = new ApiResponseDTO<>("Transaction done.", "200");
             log.info("Returning status 200 with message.");
             return new ResponseEntity<>(apiResponseDTO, HttpStatus.OK);

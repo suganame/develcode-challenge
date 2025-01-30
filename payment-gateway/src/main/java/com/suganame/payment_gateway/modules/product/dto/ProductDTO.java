@@ -1,4 +1,4 @@
-package com.suganame.payment_gateway.modules.payment.dtos;
+package com.suganame.payment_gateway.modules.product.dto;
 
 import java.math.BigDecimal;
 
@@ -9,7 +9,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class ProductDTO {
     Long id;
-    String description;
     BigDecimal quantity;
-
 }

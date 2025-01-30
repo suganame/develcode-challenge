@@ -1,12 +1,15 @@
-package com.suganame.payment_gateway.modules.payment.entities;
+package com.suganame.payment_gateway.modules.product.entities;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-import com.suganame.payment_gateway.modules.payment.dtos.ProductDTO;
+import com.suganame.payment_gateway.modules.order.entities.OrderEntity;
+import com.suganame.payment_gateway.modules.product.dto.ProductDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,7 +27,6 @@ public class ProductEntity {
     @Column(nullable = false)
     private BigDecimal quantity;
 
-    public ProductDTO fromEntity() {
-        return new ProductDTO(id, description, quantity);
-    }
+    @ManyToMany(mappedBy = "products")
+    private List<OrderEntity> orders;
 }
