@@ -12,14 +12,14 @@ export class CheckoutController {
   @Post()
   @HttpCode(HttpStatus.OK)
   execute(@Body() createCheckoutDto: CreateCheckoutDto) {
-    this.logger.log(`Route /checkout accessed with followed data: body=${JSON.stringify(createCheckoutDto)}.`)
+    this.logger.log(`Rota /checkout chamada com os seguintes dados: body=${JSON.stringify(createCheckoutDto)}.`)
     return this.checkoutService.checkout(createCheckoutDto);
   }
 
   @Post("/retry")
   @HttpCode(HttpStatus.OK)
   executeRetry(@Body() createCheckoutDto: CreateCheckoutDto) {
-    this.logger.log(`Route /checkout/retry accessed with followed data: body=${JSON.stringify(createCheckoutDto)}.`)
+    this.logger.log(`Rota /checkout/retry acessada com os seguintes dados: body=${JSON.stringify(createCheckoutDto)}.`)
     return this.checkoutService.checkoutRetry(createCheckoutDto);
   }
 }

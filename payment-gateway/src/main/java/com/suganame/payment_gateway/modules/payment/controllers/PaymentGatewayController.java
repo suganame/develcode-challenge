@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +19,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -30,15 +29,18 @@ public class PaymentGatewayController {
     @Autowired
     private PaymentUseCase paymentUseCase;
 
+    private
+    ApiResponseDTO<String> apiResponseDTO;
+
     @PostMapping("/execute")
     @Operation(
         summary = "Executa a transação do pedido, recebido previamente do microsserviço de checkout",
-        requestBody = @RequestBody(
+        requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
             description = "Dados de entrada",
             content = @Content(
                 mediaType = "application/json",
                 schema = @Schema(implementation = OrderDTO.class),
-                examples = @ExampleObject(value = "[{\"id\": 1, \"quantity\": 10}]")
+                examples = @ExampleObject(value = "{\"products\": [{\"id\": 1, \"quantity\": 10}]}")
             )
         ),
         responses = {
@@ -49,30 +51,49 @@ public class PaymentGatewayController {
     )
     public ResponseEntity<ApiResponseDTO<String>> execute(@RequestBody OrderDTO orderDTO)
             throws ProductNotFoundException, ProductOutOfStockException, RuntimeException {
-        ApiResponseDTO<String> apiResponseDTO;
+        
         try {
-            log.info("Route /checkout/execute was called.");
+            log.info("Rota /checkout/execute chamada.");
             paymentUseCase.execute(orderDTO);
-            apiResponseDTO = new ApiResponseDTO<>("Transaction done.", "200");
-            log.info("Returning status 200 with message.");
+            apiResponseDTO = new ApiResponseDTO<>("Processo concluido", "200");
+            log.info("Retornando status 200 com mensagem.");
             return new ResponseEntity<>(apiResponseDTO, HttpStatus.OK);
         } catch (ProductOutOfStockException ex) {
-            log.info("Returning status 409 with message.");
+            log.info("Retornando status 409 com messagem.");
             apiResponseDTO = new ApiResponseDTO<>(ex.getMessage(), "409");
             return new ResponseEntity<>(apiResponseDTO, HttpStatus.CONFLICT);
         } catch (ProductNotFoundException ex) {
-            log.info("Returning status 404 with message.");
+            log.info("Retornando status 404 com mensagem.");
             apiResponseDTO = new ApiResponseDTO<>(ex.getMessage(), "404");
             return new ResponseEntity<>(apiResponseDTO, HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            log.info("Retornando status 500 com mensagem");
+            apiResponseDTO = new ApiResponseDTO<>(ex.getMessage(), "500");
+            return new ResponseEntity<>(apiResponseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
 
+    @Operation(
+        summary = "Endpoint criado para simular o retry. Sempre retornará status 500",
+        requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Dados de entrada",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = OrderDTO.class),
+                examples = @ExampleObject(value = "{\"products\": [{\"id\": 1, \"quantity\": 10}]}")
+            )
+        ),
+        responses = {
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor.")
+        }
+    )
     @PostMapping("/execute/retry")
-    public ResponseEntity<?> executeRetry(@RequestBody OrderDTO orderDTO) {
-        log.info("Route /checkout/execute was called.");
-        log.info("This is a retry-routing test.");
-        log.info("Returning status 500 with message.");
-        return new ResponseEntity<>("Test retry.", HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<ApiResponseDTO<String>> executeRetry(@RequestBody OrderDTO orderDTO) {
+        log.info("Rota /checkout/execute chamada.");
+        log.info("Esta e uma rota para teste de retry.");
+        log.info("Retornando status 500 com mensagem");
+        apiResponseDTO = new ApiResponseDTO<>("Test retry.", "500");
+        return new ResponseEntity<>(apiResponseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

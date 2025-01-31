@@ -28,17 +28,17 @@ export class CheckoutService {
       return data;
     } catch (error) {
       if (error.code == "ECONNREFUSED") {
-        this.logger.error("Payment gateway unavaliable.", new Error().stack)
+        this.logger.error("Gateway de pagamento nao disponivel.", new Error().stack)
         throw new InternalServerErrorException();
       }
       if (error.status === 500) {
-        this.logger.error("After several attempts, the server returned an error.", new Error().stack)
-        throw new GatewayTimeoutException("After several attempts, the server returned an error. Please, contact our support.")
+        this.logger.error("Apos varias tentativas, o servidor retornou um erro. Por favor, entre em contato com nosso suporte.", new Error().stack)
+        throw new GatewayTimeoutException("Apos varias tentativas, o servidor retornou um erro. Por favor, entre em contato com nosso suporte.")
       } else if (error.status === 409) {
         this.logger.error(error.response.data, new Error().stack)
         throw new ConflictException(error.response.data)
       } else {
-        this.logger.error("Unknow error.", new Error().stack)
+        this.logger.error("Erro desconhecido", new Error().stack)
         throw new InternalServerErrorException();
       }
     }
@@ -54,17 +54,17 @@ export class CheckoutService {
       return data;
     } catch (error) {
       if (error.code == "ECONNREFUSED") {
-        this.logger.error("Payment gateway unavaliable.", new Error().stack)
+        this.logger.error("Gateway de pagamento nao disponivel", new Error().stack)
         throw new InternalServerErrorException();
       }
       if (error.status === 500) {
-        this.logger.error("After several attempts, the server returned an error.", new Error().stack)
-        throw new GatewayTimeoutException("After several attempts, the server returned an error. Please, contact our support.")
+        this.logger.error("Apos varias tentativas, o servidor retornou um erro. Por favor, entre em contato com nosso suporte.", new Error().stack)
+        throw new GatewayTimeoutException("Apos varias tentativas, o servidor retornou um erro. Por favor, entre em contato com nosso suporte.")
       } else if (error.status === 409) {
         this.logger.error(error.response.data, new Error().stack)
         throw new ConflictException(error.response.data)
       } else {
-        this.logger.error("Unknow error.", new Error().stack)
+        this.logger.error("Erro desconhecido.", new Error().stack)
         throw new InternalServerErrorException();
       }
     }
