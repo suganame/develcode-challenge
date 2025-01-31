@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { ConflictException, GatewayTimeoutException, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import { ConflictException, GatewayTimeoutException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { firstValueFrom } from 'rxjs';
 import { CreateCheckoutDto } from './dto/create-checkout.dto';
@@ -37,6 +37,9 @@ export class CheckoutService {
       } else if (error.status === 409) {
         this.logger.error(error.response.data, new Error().stack)
         throw new ConflictException(error.response.data)
+      } else if (error.status === 404) {
+        this.logger.error(error.response.data, new Error().stack)
+        throw new NotFoundException(error.response.data)
       } else {
         this.logger.error("Erro desconhecido", new Error().stack)
         throw new InternalServerErrorException();
