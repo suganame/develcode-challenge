@@ -28,7 +28,6 @@ Bibliotecas e ferramentas utilizadas:
 - Axios para cuidar da comunicação entre os microsserviços.
 - Axios-Retry para realizar o mecanismo de retry, quando houver falhas.
 - Para testes unitários e relatório de coverage: [Jest](https://jestjs.io).
-- Swagger para documentação dos endpoints criados
 
 <br></br>
 

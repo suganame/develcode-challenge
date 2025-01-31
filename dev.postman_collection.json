@@ -1,0 +1,169 @@
+{
+	"info": {
+		"_postman_id": "d17b2396-3e0d-4443-8d36-1aab4d8dbfcc",
+		"name": "dev",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32497417"
+	},
+	"item": [
+		{
+			"name": "CHECKOUT - /checkout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"products\": [\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 10\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host_node}}/checkout",
+					"host": [
+						"{{host_node}}"
+					],
+					"path": [
+						"checkout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CHECKOUT - /checkout/retry",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"products\": [\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 10\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host_node}}/checkout/retry",
+					"host": [
+						"{{host_node}}"
+					],
+					"path": [
+						"checkout",
+						"retry"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CHECKOUT - /checkout - Error 409",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"products\": [\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 10\r\n        },\r\n        {\r\n            \"id\": 2,\r\n            \"quantity\": 100\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host_node}}/checkout",
+					"host": [
+						"{{host_node}}"
+					],
+					"path": [
+						"checkout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CHECKOUT - /checkout - Error 404",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"products\": [\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 10\r\n        },\r\n        {\r\n            \"id\": 999,\r\n            \"quantity\": 10\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host_node}}/checkout",
+					"host": [
+						"{{host_node}}"
+					],
+					"path": [
+						"checkout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GATEWAY - checkout/execute",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"products\": [\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 10\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host_java}}/checkout/execute",
+					"host": [
+						"{{host_java}}"
+					],
+					"path": [
+						"checkout",
+						"execute"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GATEWAY - checkout/retry",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"products\": [\r\n        {\r\n            \"id\": 1,\r\n            \"quantity\": 10\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host_java}}/checkout/execute",
+					"host": [
+						"{{host_java}}"
+					],
+					"path": [
+						"checkout",
+						"execute"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
