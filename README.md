@@ -23,7 +23,7 @@ Definir e implementar schemas para o banco de dados, garantindo normalização s
 
 ## Microserviço Checkout
 
-Foi construído em Node+TS juntamente com o framework NestJS, com mecanismos assíncronos, retry para falhas, aplicação de testes unitários, controle de exceções, BDD, princípios SOLID e sistema de logging.
+Foi construído em Node+TS juntamente com o framework NestJS, com mecanismos assíncronos, retry para falhas, aplicação de testes unitários, controle de exceções, DDD, princípios SOLID e sistema de logging.
 Bibliotecas e ferramentas utilizadas:
 - Axios para cuidar da comunicação entre os microsserviços.
 - Axios-Retry para realizar o mecanismo de retry, quando houver falhas.
@@ -34,7 +34,7 @@ Bibliotecas e ferramentas utilizadas:
 
 ## Payment Gateway
 
-Foi construído em Java juntamente com o framework Spring boot no formato BDD, ACID para transações, princípios SOLID, banco de dados in memory, sistema de seed e sistema de logging.
+Foi construído em Java juntamente com o framework Spring boot no formato DDD, ACID para transações, princípios SOLID, banco de dados in memory, sistema de seed e sistema de logging.
 Bibliotecas e ferramentas utilizadas:
 - H2-Database para banco de dados "in memory"
 - Lombok - para facilitar o desenvolvimento e criação de logging.
